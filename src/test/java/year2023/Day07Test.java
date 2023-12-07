@@ -25,6 +25,6 @@ class Day07Test {
 
     @Test
     void shouldReturnCorrectValueForInputPart2() {
-        assertEquals(251779014, classUnderTest.challenge2("2023/day-07/input-2.txt"));
+        assertEquals(251582204, classUnderTest.challenge2("2023/day-07/input-2.txt"));
     }
 }

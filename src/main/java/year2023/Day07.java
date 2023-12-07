@@ -17,7 +17,6 @@ public class Day07 {
                 .toList();
         for (int i = 0; i < hands.size(); i++) {
             hands.get(i).setRank(i + 1);
-            // hands.get(i).print();
         }
         return hands.stream()
                 .map(Hand::calculatePoints)
@@ -32,7 +31,6 @@ public class Day07 {
                 .toList();
         for (int i = 0; i < hands.size(); i++) {
             hands.get(i).setRank(i + 1);
-            // hands.get(i).print();
         }
         return hands.stream()
                 .map(Hand2::calculatePoints)
@@ -189,14 +187,6 @@ public class Day07 {
         public int calculatePoints() {
             return rank * bid;
         }
-
-        public void print() {
-            System.out.print("rank: " + rank + " ");
-            for (Card card : cards) {
-                System.out.print(card.value);
-            }
-            System.out.println();
-        }
     }
 
     private static class Card {
@@ -261,7 +251,7 @@ public class Day07 {
             Map<String, Integer> map = new HashMap<>();
             for (Card2 card : cards) {
                 map.computeIfPresent(card.getValue(), (key, value) -> value + 1);
-                map.computeIfAbsent(card.getValue(), key -> 1);
+                map.putIfAbsent(card.getValue(), 1);
             }
 
             boolean fiveOfAKind = determineFiveOfAKind(map);
@@ -387,8 +377,9 @@ public class Day07 {
 
         private int withEqualType(Hand2 hand) {
             for (int i = 0; i < cards.size(); i++) {
-                if (cards.get(i).compareTo(hand.cards.get(i)) != 0) {
-                    return cards.get(i).compareTo(hand.cards.get(i));
+                int compareCardsAtI = cards.get(i).compareTo(hand.cards.get(i));
+                if (compareCardsAtI != 0) {
+                    return compareCardsAtI;
                 }
             }
             return 0;
@@ -400,14 +391,6 @@ public class Day07 {
 
         public int calculatePoints() {
             return rank * bid;
-        }
-
-        public void print() {
-            System.out.print("rank: " + rank + " ");
-            for (Card2 card : cards) {
-                System.out.print(card.value);
-            }
-            System.out.println();
         }
     }
 
@@ -437,7 +420,7 @@ public class Day07 {
         }
 
         public int compareTo(Card2 card) {
-            return this.map.get(card.getValue()) - this.map.get(value);
+            return map.get(card.getValue()) - map.get(value);
         }
     }
 }
